@@ -13,3 +13,23 @@ export function createSlug(text: string): string {
     .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
     .trim()
 }
+
+export function extractHeadingsFromNotion(blocks: any[]): Array<{id: string, text: string, level: number}> {
+  const headings: Array<{id: string, text: string, level: number}> = []
+  
+  blocks.forEach((block) => {
+    if (block.type === 'heading_1' || block.type === 'heading_2' || block.type === 'heading_3') {
+      const level = parseInt(block.type.split('_')[1])
+      const text = block[block.type]?.rich_text?.[0]?.plain_text || ''
+      if (text) {
+        headings.push({
+          id: block.id,
+          text,
+          level
+        })
+      }
+    }
+  })
+  
+  return headings
+}

@@ -71,3 +71,6 @@ export async function getPageContent(pageId: string) {
     return []
   }
 }
+
+// Alias for compatibility
+export const getBlogPosts = getPublishedBlogPosts

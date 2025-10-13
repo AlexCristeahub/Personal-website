@@ -1,8 +1,31 @@
-import { Client } from '@notionhq/client'
+// Simple fallback for static generation
+const mockNotionData: NotionPage[] = [
+  {
+    id: '1',
+    title: 'Welcome to My Blog',
+    slug: 'welcome',
+    published: true,
+    publishedDate: '2024-01-01',
+    lastEditedTime: '2024-01-01',
+    tags: ['welcome', 'blog'],
+    excerpt: 'Welcome to my personal blog where I share thoughts on technology and entrepreneurship.',
+    cover: ''
+  }
+]
 
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-})
+let notion: any = null
+
+// Initialize Notion client only in runtime environment
+if (typeof window === 'undefined' && process.env.NOTION_TOKEN) {
+  try {
+    const { Client } = require('@notionhq/client')
+    notion = new Client({
+      auth: process.env.NOTION_TOKEN,
+    })
+  } catch (error) {
+    console.warn('Notion client initialization failed, using mock data')
+  }
+}
 
 export interface NotionPage {
   id: string
@@ -17,9 +40,10 @@ export interface NotionPage {
 }
 
 export async function getPublishedBlogPosts(): Promise<NotionPage[]> {
-  if (!process.env.NOTION_DATABASE_ID) {
-    console.warn('NOTION_DATABASE_ID not found')
-    return []
+  // Return mock data for static generation
+  if (!notion || !process.env.NOTION_DATABASE_ID) {
+    console.warn('Using mock data for static generation')
+    return mockNotionData
   }
 
   try {
@@ -56,11 +80,15 @@ export async function getPublishedBlogPosts(): Promise<NotionPage[]> {
     })
   } catch (error) {
     console.error('Error fetching blog posts:', error)
-    return []
+    return mockNotionData
   }
 }
 
 export async function getPageContent(pageId: string) {
+  if (!notion) {
+    return []
+  }
+  
   try {
     const response = await notion.blocks.children.list({
       block_id: pageId,
@@ -74,3 +102,8 @@ export async function getPageContent(pageId: string) {
 
 // Alias for compatibility
 export const getBlogPosts = getPublishedBlogPosts
+
+export async function getBlogPost(slug: string): Promise<NotionPage | null> {
+  const posts = await getPublishedBlogPosts()
+  return posts.find(post => post.slug === slug) || null
+}

@@ -3,6 +3,7 @@ import { Client } from "@notionhq/client"
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
+  notionVersion: '2025-09-03',
 })
 
 function formatDatabaseId(id: string): string {
@@ -73,7 +74,8 @@ export async function GET() {
       const properties = page.properties
       
       // Debug the tags property specifically
-      console.log('🏷️ Fixed API - Page:', properties.Title?.title?.[0]?.plain_text)
+      // API 2025-09-03: 'title' property type is now 'name'
+      console.log('🏷️ Fixed API - Page:', properties.Title?.name?.[0]?.plain_text)
       console.log('🏷️ Fixed API - Raw Tags property:', JSON.stringify(properties.Tags, null, 2))
       
       // Extract tags more carefully
@@ -93,8 +95,9 @@ export async function GET() {
       let slug = page.id
       if (properties.Slug?.rich_text?.[0]?.plain_text) {
         slug = properties.Slug.rich_text[0].plain_text
-      } else if (properties.Title?.title?.[0]?.plain_text) {
-        slug = properties.Title.title[0].plain_text
+      } else if (properties.Title?.name?.[0]?.plain_text) {
+        // API 2025-09-03: 'title' property type is now 'name'
+        slug = properties.Title.name[0].plain_text
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/(^-|-$)/g, "")
@@ -102,7 +105,8 @@ export async function GET() {
 
       return {
         id: page.id,
-        title: properties.Title?.title?.[0]?.plain_text || "Untitled",
+        // API 2025-09-03: 'title' property type is now 'name'
+        title: properties.Title?.name?.[0]?.plain_text || "Untitled",
         slug,
         excerpt: properties.Excerpt?.rich_text?.[0]?.plain_text,
         cover: page.cover?.external?.url || page.cover?.file?.url,

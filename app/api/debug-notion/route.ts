@@ -22,13 +22,24 @@ export async function GET() {
   }
 
   try {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const notion = new Client({ 
+      auth: process.env.NOTION_TOKEN,
+      notionVersion: '2025-09-03',
+    });
 
     // Test 1: Can we connect to Notion at all?
     try {
       console.log('🔍 Debug Notion - Testing database query...');
-      const response = await notion.databases.query({
+      
+      // API 2025-09-03: Get database first to get data source ID
+      const database = await notion.databases.retrieve({
         database_id: process.env.NOTION_DATABASE_ID,
+      });
+      
+      const dataSourceId = database.data_sources?.[0]?.id || process.env.NOTION_DATABASE_ID;
+      
+      const response = await notion.dataSources.query({
+        data_source_id: dataSourceId,
       });
 
       results.connectionTest = 'SUCCESS';
@@ -64,7 +75,8 @@ export async function GET() {
 
         // Test 4: Check actual data from first few pages
         results.sampleData = response.results.slice(0, 3).map((page: any) => {
-          const title = page.properties.Title?.title?.[0]?.plain_text || 'No title';
+          // API 2025-09-03: 'title' property type is now 'name'
+          const title = page.properties.Title?.name?.[0]?.plain_text || 'No title';
           const published = page.properties.Published?.checkbox || false;
           const tags = page.properties.Tags?.multi_select?.map((tag: any) => tag.name) || [];
           

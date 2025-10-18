@@ -196,7 +196,7 @@ export default function CategoryPage() {
               ) : (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {posts.map((post) => (
-                    <Link key={post.id} href={`/blog/${post.slug}`}>
+                    <Link key={post.id} href={`/blog/${post.slug || post.id}`}>
                       <Card className="h-full hover:shadow-lg transition-shadow duration-200 cursor-pointer">
                         {post.cover && (
                           <div className="aspect-video overflow-hidden rounded-t-lg">
@@ -217,11 +217,11 @@ export default function CategoryPage() {
                           <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                             <div className="flex items-center gap-1">
                               <CalendarDays className="w-4 h-4" />
-                              {format(new Date(post.publishedDate), "MMM d, yyyy")}
+                              {post.publishedDate ? format(new Date(post.publishedDate), "MMM d, yyyy") : 'No date'}
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="w-4 h-4" />
-                              {format(new Date(post.lastEditedTime), "MMM d")}
+                              {post.lastEditedTime ? format(new Date(post.lastEditedTime), "MMM d") : 'N/A'}
                             </div>
                           </div>
                           {post.tags.length > 0 && (

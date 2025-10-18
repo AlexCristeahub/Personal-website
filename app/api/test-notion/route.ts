@@ -3,13 +3,23 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const notion = new Client({ 
+      auth: process.env.NOTION_TOKEN,
+      notionVersion: '2025-09-03',
+    });
     
     console.log('🔍 Testing standard Notion API...');
     
-    // Use standard database query (not dataSources)
-    const response = await notion.databases.query({
+    // API 2025-09-03: Get database first to get data source ID
+    const database = await notion.databases.retrieve({
       database_id: process.env.NOTION_DATABASE_ID!,
+    });
+    
+    const dataSourceId = database.data_sources?.[0]?.id || process.env.NOTION_DATABASE_ID!;
+    
+    // Use dataSources.query (new API)
+    const response = await notion.dataSources.query({
+      data_source_id: dataSourceId,
       filter: {
         property: "Published",
         checkbox: {
@@ -31,7 +41,8 @@ export async function GET() {
 
       return {
         id: page.id,
-        title: properties.Title?.title?.[0]?.plain_text || "Untitled",
+        // API 2025-09-03: 'title' property type is now 'name'
+        title: properties.Title?.name?.[0]?.plain_text || "Untitled",
         published: properties.Published?.checkbox || false,
         tags: tags,
         rawTagsProperty: properties.Tags, // Include raw property for debugging

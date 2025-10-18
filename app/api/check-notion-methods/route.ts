@@ -3,7 +3,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const notion = new Client({ 
+      auth: process.env.NOTION_TOKEN,
+      notionVersion: '2025-09-03',
+    });
     
     const methods = {
       hasDatabase: !!notion.databases,

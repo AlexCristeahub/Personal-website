@@ -122,16 +122,24 @@ export default function BlogPostPage() {
               <div className="text-6xl mb-4">📝</div>
               <h1 className="text-5xl font-bold text-foreground mb-4">{post.title}</h1>
               <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
-                <div className="flex items-center gap-1">
-                  <CalendarDays className="w-4 h-4" />
-                  {format(new Date(post.publishedDate), "MMMM d, yyyy")}
-                </div>
-                <span>•</span>
-                <div className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  Updated {format(new Date(post.lastEditedTime), "MMMM d, yyyy")}
-                </div>
-                <span>•</span>
+                {post.publishedDate && (
+                  <>
+                    <div className="flex items-center gap-1">
+                      <CalendarDays className="w-4 h-4" />
+                      {format(new Date(post.publishedDate), "MMMM d, yyyy")}
+                    </div>
+                    <span>•</span>
+                  </>
+                )}
+                {post.lastEditedTime && (
+                  <>
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      Updated {format(new Date(post.lastEditedTime), "MMMM d, yyyy")}
+                    </div>
+                    <span>•</span>
+                  </>
+                )}
                 <span>8 min read</span>
               </div>
 

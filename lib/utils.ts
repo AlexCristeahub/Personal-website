@@ -14,8 +14,20 @@ export function createSlug(text: string): string {
     .trim()
 }
 
-export function extractHeadingsFromNotion(blocks: any[]): Array<{id: string, text: string, level: number}> {
-  const headings: Array<{id: string, text: string, level: number}> = []
+export function extractHeadingsFromNotion(recordMapOrBlocks: any): Array<{id: string, text: string, level: number, slug: string}> {
+  const headings: Array<{id: string, text: string, level: number, slug: string}> = []
+  
+  // Handle both recordMap format and array of blocks
+  let blocks: any[] = []
+  if (recordMapOrBlocks?.block) {
+    // It's a recordMap, extract blocks
+    blocks = Object.values(recordMapOrBlocks.block).map((b: any) => b.value)
+  } else if (Array.isArray(recordMapOrBlocks)) {
+    // It's already an array of blocks
+    blocks = recordMapOrBlocks
+  } else {
+    return headings
+  }
   
   blocks.forEach((block) => {
     if (block.type === 'heading_1' || block.type === 'heading_2' || block.type === 'heading_3') {
@@ -25,7 +37,8 @@ export function extractHeadingsFromNotion(blocks: any[]): Array<{id: string, tex
         headings.push({
           id: block.id,
           text,
-          level
+          level,
+          slug: createSlug(text)
         })
       }
     }

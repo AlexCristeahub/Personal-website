@@ -34,11 +34,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     document.documentElement.classList.toggle('dark', newTheme === 'dark')
   }
 
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <div>{children}</div>
-  }
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

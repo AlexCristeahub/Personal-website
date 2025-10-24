@@ -4,8 +4,12 @@ import { ScrollProgress } from "@/components/scroll-progress"
 import { Button } from "@/components/ui/button"
 import Footer from "@/components/footer"
 import Link from "next/link"
+import type { Metadata } from "next"
 
-
+export const metadata: Metadata = {
+  title: "Alexandru Cristea's Blog - Home",
+  description: "Alexandru Cristea's Blog - Thoughts on technology, entrepreneurship, and building in public",
+}
 
 export default function Home() {
   return (

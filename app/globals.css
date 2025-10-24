@@ -122,6 +122,20 @@
 
   body {
     @apply bg-background text-foreground text-lg;
+    letter-spacing: 0.015em; /* Adds subtle spacing between characters */
+  }
+  
+  /* Better letter spacing for blog content */
+  .prose, 
+  .notion-renderer,
+  article {
+    letter-spacing: 0.02em;
+    line-height: 1.75;
+  }
+  
+  /* Headings with tighter spacing */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.01em;
   }
 
   .font-script {

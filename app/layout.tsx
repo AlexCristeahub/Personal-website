@@ -19,8 +19,8 @@ const dancingScript = Dancing_Script({
 })
 
 export const metadata: Metadata = {
-  title: "Notion-Style Website",
-  description: "A minimalist website replicating Notion's page format",
+  title: "Alexandru Cristea's Blog",
+  description: "Alexandru Cristea's Blog - Thoughts on technology, entrepreneurship, and building in public",
   generator: "v0.app",
 }
 

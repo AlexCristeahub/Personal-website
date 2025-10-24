@@ -123,6 +123,23 @@
   body {
     @apply bg-background text-foreground text-lg;
     letter-spacing: 0.015em; /* Adds subtle spacing between characters */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  /* Prevent horizontal overflow on all containers */
+  html {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Ensure all content respects viewport width */
+  * {
+    max-width: 100%;
+  }
+  
+  /* Allow specific elements to be wider if needed */
+  html, body, #__next {
+    max-width: none;
   }
   
   /* Better letter spacing for blog content */
@@ -216,6 +233,32 @@
   /* Notion renderer styles */
   .notion-renderer {
     @apply max-w-none;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Ensure prose content doesn't overflow */
+  .prose {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .prose img,
+  .prose video,
+  .prose iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .notion-renderer .notion-page {
@@ -303,11 +346,15 @@
     display: grid;
     grid-template-columns: 1fr;
     min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .blog-main-content {
     width: 100%;
-    max-width: none;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 0 1rem;
   }
 
   .blog-toc-sidebar {
@@ -326,6 +373,7 @@
       width: 100%;
       max-width: none;
       margin-right: 0;
+      padding: 0 1.5rem;
     }
 
     .blog-toc-sidebar {

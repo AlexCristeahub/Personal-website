@@ -141,7 +141,7 @@ export const NotionSidebar = memo(function NotionSidebar({ children }: NotionSid
       </Sidebar>
 
       <SidebarInset className="bg-white dark:bg-black">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-500">
+        <div className="sticky top-0 z-40 flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-500 bg-white dark:bg-black">
           <SidebarTrigger className="h-6 w-6 text-gray-600 dark:text-gray-300 hover:opacity-70" />
           <div className="h-4 w-px bg-gray-200 dark:bg-gray-500" />
           <Breadcrumb />

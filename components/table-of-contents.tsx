@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { extractHeadingsFromNotion } from "@/lib/utils"
 
 interface TOCItem {
@@ -17,6 +17,8 @@ interface TableOfContentsProps {
 export function TableOfContents({ recordMap }: TableOfContentsProps) {
   const [activeSection, setActiveSection] = useState<string>("")
   const [tocItems, setTocItems] = useState<TOCItem[]>([])
+  const [isSticky, setIsSticky] = useState(false)
+  const tocRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (recordMap) {
@@ -24,6 +26,22 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
       setTocItems(headings)
     }
   }, [recordMap])
+  
+  // Manual sticky implementation
+  useEffect(() => {
+    const handleScroll = () => {
+      if (tocRef.current) {
+        const rect = tocRef.current.getBoundingClientRect()
+        const shouldStick = window.scrollY > 100
+        setIsSticky(shouldStick)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     if (tocItems.length === 0) return
@@ -56,7 +74,17 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
 
   if (tocItems.length === 0) {
     return (
-      <div className="p-4">
+      <div 
+        ref={tocRef}
+        className="p-4"
+        style={isSticky ? {
+          position: 'fixed',
+          top: '5rem',
+          width: '320px',
+          maxHeight: 'calc(100vh - 6rem)',
+          overflowY: 'auto'
+        } : undefined}
+      >
         <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
           <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
           <p className="text-sm text-muted-foreground">No headings found in this post.</p>
@@ -66,7 +94,17 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
   }
 
   return (
-    <div className="p-4">
+    <div 
+      ref={tocRef}
+      className="p-4"
+      style={isSticky ? {
+        position: 'fixed',
+        top: '5rem',
+        width: '320px',
+        maxHeight: 'calc(100vh - 6rem)',
+        overflowY: 'auto'
+      } : undefined}
+    >
       <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
         <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
         <nav className="space-y-2">

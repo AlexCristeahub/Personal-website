@@ -123,6 +123,14 @@
   /* Fix for sticky positioning in blog pages */
   main:has(.blog-page-container) {
     overflow: visible !important;
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  
+  /* Ensure all parent containers allow sticky */
+  .blog-page-container,
+  .blog-page-container * {
+    overflow-y: visible;
   }
 
   body {

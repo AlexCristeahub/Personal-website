@@ -119,6 +119,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  /* Fix for sticky positioning in blog pages */
+  main:has(.blog-page-container) {
+    overflow: visible !important;
+  }
 
   body {
     @apply bg-background text-foreground text-lg;
@@ -348,6 +353,7 @@
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
+    overflow-y: visible !important; /* Critical: allow sticky to work */
     position: relative; /* Add positioning context for sticky */
   }
 

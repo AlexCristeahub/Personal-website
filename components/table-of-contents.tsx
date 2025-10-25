@@ -33,6 +33,7 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
       if (tocRef.current) {
         const rect = tocRef.current.getBoundingClientRect()
         const shouldStick = window.scrollY > 100
+        console.log('TOC Scroll Debug:', { scrollY: window.scrollY, shouldStick, isSticky })
         setIsSticky(shouldStick)
       }
     }
@@ -41,7 +42,7 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
     handleScroll()
     
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isSticky])
 
   useEffect(() => {
     if (tocItems.length === 0) return
@@ -102,11 +103,14 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
         top: '5rem',
         width: '320px',
         maxHeight: 'calc(100vh - 6rem)',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        zIndex: 30
       } : undefined}
     >
-      <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
-        <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
+      <div className={`bg-background border rounded-lg p-4 shadow-sm ${isSticky ? 'border-primary shadow-lg' : 'border-border'}`}>
+        <h3 className="text-sm font-semibold text-foreground mb-3">
+          Table of Contents {isSticky && '📌'}
+        </h3>
         <nav className="space-y-2">
           {tocItems.map((item) => (
             <button

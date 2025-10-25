@@ -390,6 +390,11 @@
       display: block;
       width: 320px;
       height: fit-content; /* Allow sidebar to be shorter than main content */
+      position: sticky;
+      top: 5rem; /* Position below the sticky nav */
+      align-self: start;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
     }
   }
 

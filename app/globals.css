@@ -348,6 +348,7 @@
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
+    position: relative; /* Add positioning context for sticky */
   }
 
   .blog-main-content {
@@ -355,10 +356,12 @@
     max-width: 100%;
     overflow-x: hidden;
     padding: 0 1rem;
+    min-height: 100vh; /* Ensure content is tall enough for sticky to work */
   }
 
   .blog-toc-sidebar {
     display: none;
+    position: relative; /* Ensure sticky works within this container */
   }
 
   /* Large screens: Show TOC sidebar with optimized layout */
@@ -367,6 +370,7 @@
       grid-template-columns: 1fr 320px;
       gap: 24px;
       padding-right: 2rem;
+      align-items: start; /* Important: allows sidebar to stick independently */
     }
 
     .blog-main-content {
@@ -379,6 +383,7 @@
     .blog-toc-sidebar {
       display: block;
       width: 320px;
+      height: fit-content; /* Allow sidebar to be shorter than main content */
     }
   }
 

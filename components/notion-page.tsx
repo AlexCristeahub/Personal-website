@@ -26,8 +26,9 @@ export function NotionPage() {
 
           <p className="leading-relaxed text-foreground">
             Everything about my journey as a young founder you can find in this blog.
-            In the past few months I have been thinking about how much it would benefit me knowing some basic fundemental concepts around the startup space.
-            That's why I created this blog, to show the people the process of building something and encouraging
+            That means apps that I have been working on, behind the scenes, tips & tricks and some opinions about other stuff.
+            In the past few months I have been thinking about how much it would benefit people to see where to start from in this space so that you don't have to figure out everything by yourself.
+            That's why I created this blog, to show the people what the process looks like.
           </p>
 
           <h3 id="essential-tools" className="text-2xl font-semibold text-foreground mb-3">

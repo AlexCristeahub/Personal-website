@@ -56,7 +56,7 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
 
   if (tocItems.length === 0) {
     return (
-      <div className="sticky top-8 p-4">
+      <div className="sticky top-20 p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
         <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
           <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
           <p className="text-sm text-muted-foreground">No headings found in this post.</p>
@@ -66,7 +66,7 @@ export function TableOfContents({ recordMap }: TableOfContentsProps) {
   }
 
   return (
-    <div className="sticky top-8 p-4">
+    <div className="sticky top-20 p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
       <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
         <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
         <nav className="space-y-2">

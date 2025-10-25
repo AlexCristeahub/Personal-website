@@ -45,7 +45,7 @@ export default function BlogPostPage() {
             </div>
           </main>
           <aside className="blog-toc-sidebar">
-            <div className="sticky top-8 p-4">
+            <div className="sticky top-20 p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
               <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
                 <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
                 <p className="text-sm text-muted-foreground">Loading...</p>
@@ -91,7 +91,7 @@ export default function BlogPostPage() {
             </div>
           </main>
           <aside className="blog-toc-sidebar">
-            <div className="sticky top-8 p-4">
+            <div className="sticky top-20 p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
               <div className="bg-background border border-border rounded-lg p-4 shadow-sm">
                 <h3 className="text-sm font-semibold text-foreground mb-3">Table of Contents</h3>
                 <p className="text-sm text-muted-foreground">No content available</p>
@@ -145,7 +145,7 @@ export default function BlogPostPage() {
 
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {post.tags.map((tag) => (
+                  {post.tags.map((tag: string) => (
                     <span key={tag} className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-semibold">
                       {tag}
                     </span>

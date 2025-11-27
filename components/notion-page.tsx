@@ -21,7 +21,7 @@ export function NotionPage() {
           </h2>
 
           <p className="leading-relaxed text-foreground">
-            You are probably here from my 𝕏 page, where I am more active.
+            You are probably here from my <a href="https://x.com/alex_cristeaz" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">𝕏</a> page, where I am more active.
           </p>
 
           <p className="leading-relaxed text-foreground">

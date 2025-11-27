@@ -4,6 +4,8 @@ import { Inter, Dancing_Script } from "next/font/google"
 import { Suspense } from "react"
 import { ThemeProvider } from "./contexts/ThemeContext"
 import PageTransition from "@/components/page-transition"
+import { PHProvider } from "./providers/posthog"
+import { PostHogPageView } from "./providers/posthog-pageview"
 import "./globals.css"
 
 const inter = Inter({
@@ -32,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${dancingScript.variable} font-sans antialiased bg-white text-black dark:text-white transition-colors duration-300`} style={{"--dark-bg": "#000000"} as React.CSSProperties}>
-        <ThemeProvider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <PageTransition>{children}</PageTransition>
-          </Suspense>
-        </ThemeProvider>
-        {/* Analytics component removed */}
+        <PHProvider>
+          <ThemeProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              <PostHogPageView />
+              <PageTransition>{children}</PageTransition>
+            </Suspense>
+          </ThemeProvider>
+        </PHProvider>
       </body>
     </html>
   )

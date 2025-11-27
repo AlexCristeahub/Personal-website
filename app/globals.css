@@ -3,6 +3,34 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Mobile Sticky Navigation - CRITICAL */
+.mobile-sticky-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.mobile-content-wrapper {
+  padding-top: 56px !important;
+}
+
+/* Desktop: revert to sticky */
+@media (min-width: 768px) {
+  .mobile-sticky-header {
+    position: sticky !important;
+    left: auto !important;
+    right: auto !important;
+  }
+  
+  .mobile-content-wrapper {
+    padding-top: 0 !important;
+  }
+}
+
 :root {
   /* Updated color tokens to match Notion's clean aesthetic */
   --background: oklch(1 0 0);
@@ -527,6 +555,21 @@
 
 .animate-delay-800 {
   animation-delay: 0.8s;
+}
+
+/* Fix sticky header for mobile */
+[data-slot="sidebar-inset"] > header:first-child,
+main > header:first-child {
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+}
+
+/* Ensure parent containers don't break sticky */
+[data-slot="sidebar-inset"],
+main.relative {
+  overflow: visible !important;
 }
 
 /* Theme Toggle Styles */

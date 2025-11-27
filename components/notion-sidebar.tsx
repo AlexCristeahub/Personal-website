@@ -58,15 +58,14 @@ const HashIcon = memo(({ className }: { className?: string }) => (
   </svg>
 ))
 
-const PaletteIcon = memo(({ className }: { className?: string }) => (
+const FolderIcon = memo(({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5a2 2 0 00-2 2v12a4 4 0 004 4h2a2 2 0 002-2V5a2 2 0 00-2-2z"
+      d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
     />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9h10a2 2 0 012 2v2a2 2 0 01-2 2H9" />
   </svg>
 ))
 
@@ -84,14 +83,9 @@ const items = [
     icon: BookOpenIcon,
   },
   {
-    title: "Apps",
-    url: "#the-power-of-minimalism",
-    icon: FileTextIcon,
-  },
-  {
-    title: "Design",
-    url: "/design",
-    icon: PaletteIcon,
+    title: "Projects",
+    url: "/projects",
+    icon: FolderIcon,
   },
   {
     title: "Contact",
@@ -140,13 +134,19 @@ export const NotionSidebar = memo(function NotionSidebar({ children }: NotionSid
         </SidebarFooter>
       </Sidebar>
 
-      <SidebarInset className="bg-white dark:bg-black">
-        <div className="sticky top-0 z-40 flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-500 bg-white dark:bg-black">
+      <SidebarInset className="bg-white dark:bg-black relative">
+        <header 
+          id="mobile-nav" 
+          className="mobile-sticky-header flex items-center gap-2 px-4 py-3 border-b border-gray-200 dark:border-gray-500 bg-white dark:bg-black"
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999 }}
+        >
           <SidebarTrigger className="h-6 w-6 text-gray-600 dark:text-gray-300 hover:opacity-70" />
           <div className="h-4 w-px bg-gray-200 dark:bg-gray-500" />
           <Breadcrumb />
+        </header>
+        <div className="mobile-content-wrapper" style={{ paddingTop: '56px' }}>
+          {children}
         </div>
-        {children}
       </SidebarInset>
     </SidebarProvider>
   )
